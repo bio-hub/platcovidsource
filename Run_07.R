@@ -1,5 +1,7 @@
+### ### ### ### ### ### ### ### ### ### 
+#### Render the Hugo.io by blogdown ###
+### ### ### ### ### ### ### ### ### ###
 
-## Abrir esse file apenas no project source.
 load('../../updates/current/Rdata/final.RData')
 
 ### ### ### ### ### #
@@ -65,7 +67,6 @@ for(i in 1:nrow(tissue_list)){
 }  
 
 
-
 #Cell
 for(i in 1:nrow(cell_list)){
   template.dir = paste0("../unsourced/cell/")
@@ -84,27 +85,15 @@ for(i in 1:nrow(cell_list)){
   }
 }  
 
-#Rodar o bug_fix_menu
-soure('../unsourced/fix_bug_menu.R')
-
-server = blogdown:::serve_site()
-server$stop_server()
-
-
 ### ### ### ### ### ### ### #
 #### Article Post Panel #####
 ### ### ### ### ### ### ### #
 
 ### Mark abstract ###
-source("../../scripts/mark_abstracts.R")
+source("scripts/mark_abstracts.R")
 db_marked = merge(db, abs_bold, by = "pmid", all = T)
 
-### Curated Articles ###
-curated_pmids <- read.delim("/media/patgen/0d14f033-9f0b-48f9-97a1-b437c85165a5/Lucas/Corona/RData/curated_pmids.txt", stringsAsFactors=FALSE)
-curated_pmids <- read.delim("/Volumes/HD 320GB Arquivos/MEGA/Corona/RData/curated_pmids.txt", stringsAsFactors=FALSE)
-
 ### Fix the database ###
-#a = unique(subset(curated_pmids, !deletar =="x")[,1])
 a = unique(subset(db.abstract, selected == 3, select = "pmid"))
 a = a[a$pmid %in% db_new$pmid,]
 a = db_marked[db_marked$pmid %in% a,]
@@ -123,9 +112,6 @@ a[which(is.na(a$jabbrv)),"jabbrv"] = "None"
 a$keywords = sapply(a$keywords, function(x) gsub("\\ \\(","; ",x))
 a$keywords = sapply(a$keywords, function(x) gsub("\\(","",x))
 a$abstract_bold = sapply(a$abstract_bold, function(x) gsub("\\*\\*\\*\\*","\\*\\*",x))
-#a[grep("32275256",value = F, a$pmid),"author"]= NA
-#a[grep("32278065",value = F, a$pmid),"keywords"]= NA
-
 
 
 for(i in 1:nrow(a)){
@@ -207,19 +193,9 @@ for (i in 1:nrow(a)){
 
 temp = unique(subset(db.abstract, selected == 3, select = "pmid"))
 temp = db_marked[db_marked$pmid %in% temp$pmid,]
-save(context,category,box.4,temp, file = "../../updates/current/Rdata/context.Rdata")
-
-save.image(file = "../../updates/current/Rdata/final.Rdata")
-
-
 
 server = blogdown:::serve_site()
 server$stop_server()
-
-
-
-
-
 
 df=context[["context"]][["g1"]]
 df$pmid = as.character(df$pmid)
@@ -242,35 +218,3 @@ df = merge(df, data.frame(Term=na.omit(box.4[,2])), by="Term", all=T)
 df$Term = sapply(df$Term,function(x) sub("combined terms g2","All (sum)", x))
 
 df = df[order(-df$Count),]
-     
-setwd("../../")     
-
-
-### Old ###
-
-render(input = "../unsourced/gpanel_template.Rmd",output_format = "html_document",
-       output_file = "index.html",output_dir = "./static/gpanel/")
-
-for(i in 1:nrow(gene.view.ALL_new)){
-  render(input = "../unsourced/gpanel_template.Rmd",output_format = "html_document",
-         output_file = paste0(gene_list_new[i,5],".html"),output_dir = "./static/gpanel/")
-}
-
-
-for(i in 1:nrow(drugs.view)){
-  render(input = "../unsourced/dpanel_template.Rmd",output_format = "html_document",
-         output_file = paste0(sub("-",".",drugs.view[i,1],".html")),output_dir = "./static/dpanel/")
-}
-
-
-
-for(i in 1:nrow(tissue_list)){
-  render(input = "../unsourced/tpanel_template.Rmd",output_format = "html_document",
-         output_file = paste0(sub(" ","_",tissue_list[i,1],".html")),output_dir = "./static/tpanel/")
-}
-
-
-for(i in 1:nrow(cell_list)){
-  render(input = "../unsourced/cpanel_template.Rmd",output_format = "html_document",
-         output_file = paste0(sub(" ","_",cell_list[i,1],".html")),output_dir = "./static/cpanel/")
-}

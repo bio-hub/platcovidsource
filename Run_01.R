@@ -1,9 +1,7 @@
+
 ### ### ### ### ### ### ### #### ### ### 
 ######## 1 Source the Libraries ######
 ### ### ### ### ### ### ### #### ### ###
-setwd("/Users/brandao/MEGA_Patgen/Corona/")
-setwd("/Volumes/HD 320GB Arquivos/MEGA/Corona")
-setwd("/media/patgen/0d14f033-9f0b-48f9-97a1-b437c85165a5/Lucas/Corona")
 source("./scripts/libraries_corona.R")
 rm(corona_library)
 
@@ -12,12 +10,9 @@ dir.create("./updates/current/export")
 dir.create("./updates/current/Rdata")
 dir.create("./updates/current/tmp")
 
-### ### ### ### ### ### ### #### ### ### 
-###### 2 Creats the database #########
-### ### ### ### ### ### ### #### ### ### 
-### ###
-## busca para baixar o xml --> formato .txt
-### ###
+### ### ### ### ### ### ### #### ### 
+###### 2 Creats the database #######
+### ### ### ### ### ### ### #### ### 
 
 download.file(url = "https://www.ncbi.nlm.nih.gov/research/coronavirus-api/export/tsv?",
                     destfile = "./updates/current/litcovid.tsv")
@@ -47,15 +42,9 @@ for (i in n){
 rm(n,my_query,a)
 
 
-#Download By rentrez
-#r_search <- entrez_search(db="pubmed", term=my_query)
-#r_search <- entrez_search(db="pubmed", term=my_query,retmax = r_search$count)
 pmid = litcovid$pmid
 
-#Download by easyPumed
-#dir.create("tmp")
-#setwd("../")
-
+#Download information by easyPumed 
 my_PM_list = NULL
 for (i in 1:length(xml_files)){
   my_PM_list <- c(my_PM_list, articles_to_list(pubmed_data = xml_files[i]))
@@ -78,18 +67,13 @@ if(length(nam)>2){
 } else {
   abstracts = get(nam)
 }
-
-
-
 rm(list = nam)
 rm(nam,i)
-#setwd('../')
 
 ### Country List ###
 countr = countrycode::codelist[,"country.name.en"] #Nome dos paises
 countr=countr[-which(countr$country.name.en %in% c("Hamburg","Hanover","Modena","Jersey","Parma","Tuscany")),]
 CountrWord = paste0(countr,collapse = "\\b|\\b") #Nome dos paises Para o grep
-
 
 # Creates our db
 source("scripts/create_data_base.R")
@@ -100,10 +84,3 @@ db_new = db
 load("updates//01jun2020/Rdata/old.RData")
 
 db = rbind(db_old,db_new)
-# db_abstract
-# authors_email
-
-#setwd("../..")
-#terminar na pasta CORONA
-
-save.image("updates/current/platcovid_01jun20_Run1.RData")

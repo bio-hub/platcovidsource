@@ -90,7 +90,3 @@ e = data.frame(df[which(df$pmid %in% category$abstract$g5@PMID),], category = "s
 db_abstract = rbind(a,b,c,d,e)
 article_category = unique(db_abstract[,c("pmid","category")])
 rm(a,b,c,d,e,db_abstract)
-
-#pmid.category = eval(parse(text = paste0("unique(c(",paste0("category$abstract$g",1:5,"@PMID",collapse = ","),"))")))
-#pmid.not.category = setdiff(pmid_abs$pmid,pmid.category)
-

@@ -36,9 +36,6 @@ gene.view.fun = function(entrezid = "ENTREZID"){
   )
 }
 
-#name = a$SYMBOL[55]
-#'GeneCards Summary for VIP Gene '==paste0("GeneCards Summary for ",name," Gene ")
-
 #gene.view.fun(id = a$ENTREZID[55])
 gene.view.ALL = NULL
 for (i in na.omit(a$ENTREZID)){
@@ -91,7 +88,7 @@ gene.expression.fun = function(ENTREZID, ENSEMBL){
   } 
 }
 
-#gene.expression.fun(ENTREZID = b$ENTREZID[22], ENSEMBL = b$ENSEMBL[22])
+
 gene.expression.ALL = NULL
 for(i in 1:length(c$ENSEMBL)){
   gene.expression.ALL = rbind(gene.expression.ALL, gene.expression.fun(ENTREZID = c$ENTREZID[i], ENSEMBL = c$ENSEMBL[i]))
@@ -125,18 +122,10 @@ for(j in "term3.2"){
     a.3 = rbind(a.3,
                 data.frame(pmid = as.character(db$pmid[i]),
                            sentece = paste0(grep(get(j),a.2[[1]],ignore.case = T, value = T),collapse = " [...] ")))
-    #a.4 = rbind(a.4,data.frame(pmid = as.character(db$pmid[i]), sentence = grep(get(j),a.2[[1]],ignore.case = T, value = T)))
   }
 }
 
 drug.terms = a.3
-
-## ### ### ### ### #
-## Drugs to docx ###
-## ### ### ### ### #
-
-#drug2docx = merge(drug.terms,drugs.context, by = "pmid", all = T)
-
 
 ### ### ### ### ### ###
 #### Tissue Panel #####
@@ -191,6 +180,3 @@ cell_list = cell_list[order(-cell_list$`Article number`),]
 
 rm(a.2,a.3,a.4,b,drug_atomization,drug.fun,gene.expression.fun,gene.conection.fun,gene.view.fun,a,a.1,d1,df_name,i,j,m,n,df,df2,
    one.1,one.2)                    
-
-
-save.image("platcovid_01jun20_Run5.RData")

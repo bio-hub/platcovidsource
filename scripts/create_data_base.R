@@ -10,7 +10,7 @@ for (i in 1:length(my_PM_list)){
   df_address = rbind(df_address,article_to_df(my_PM_list[i], max_chars = -1,getKeywords = F, getAuthors = T)[,c(1,11:14)])
   
 }
-#setwd("../")
+
 ### ### ### ### ### ### ###
 ##### Article type ######## 
 ### ### ### ### ### ### ###
@@ -61,12 +61,10 @@ colnames(one.1) = c("pmid","lang")
 
 article_lang = rbind(one.1,df2)
 
-### 
-
 ### ### ### ### ### ### ### ### ##
 ###### Article Affiliation #######
 ### ### ### ### ### ### ### ### ##
-#db_address = df.1
+
 df.2 =na.omit(unique(df_address[,c("pmid","address")]))
 df.2 = apply(df.2, 2, function(x) gsub(pattern = "\\(|\\)|\\.|\\:|\\[|\\]|\\+|\\-|\\'",replacement = " ", x = x))
 df.2 = as.data.frame(df.2)
@@ -184,11 +182,6 @@ abstracts = combineabs(abstracts_old,abstracts_new)
 
 source("./scripts/create_categories.R")
 
-
-
-#source("./scripts/create_categories.R")
-
-  
 ### ### ### ### ### ### ### ###
 ##### Articel Authors #######
 ### ### ### ### ### ### ### ###    
@@ -226,12 +219,3 @@ db = Reduce(function(x, y) merge(x, y, by='pmid', all=TRUE),list(df[,1:4],artica
   db = db[-which(db$pmid %in% setdiff(db$pmid, df_temp$pmid)),]
   
 rm(a,df,df_temp,article_lang,article_type,article_affiliation,one.1,one.2,df2,i,two_type,df_address,artical_date,article_category,article_authors,litcovid,m,time)
-
-save.image("updates/current/platcovid_01jun20_v2.RData")
-
-#db = merge(db,article_authors, by ="pmid", all = TRUE)
-#db = db[,c(1:10,13,11,12)]
-
-
-
-

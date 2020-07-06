@@ -1,3 +1,7 @@
+### ### ### ### ### ### ### ##
+#### Data.frame Selection ####
+### ### ### ### ### ### # ###
+
 #No Abstract
 for (i in 1:nrow(db.no_abstract)){
    db.no_abstract[i,"title"] = paste0("<a href='https://pubmed.ncbi.nlm.nih.gov/",db.no_abstract[i,"pmid"],"' target ='_blank'>",db.no_abstract[i,"title"],"</a>")
@@ -26,27 +30,4 @@ db.abstract[i,"jabbrv"] = paste0("<a href='https://doi.org/",db.abstract[i,"doi"
 }
 
 #No category
-db.abstract[-which(db.abstract$pmid %in% pmid_category),c("title",'jabbrv')]
-
-
-# Terms
-
-length(category$abstract$g1@PMID)
-View(db.abstract[db.abstract$pmid %in% category$abstract$g1@PMID,c("title","jabbrv","selected","curated")])
-
-length(category$abstract$g2@PMID)
-View(db.abstract[db.abstract$pmid %in% category$abstract$g2@PMID,c("title","jabbrv","selected","curated")])
-
-length(category$abstract$g3@PMID)
-View(db.abstract[db.abstract$pmid %in% category$abstract$g3@PMID,c("title","jabbrv","selected","curated")])
-
-length(category$abstract$g4@PMID)
-View(db.abstract[db.abstract$pmid %in% category$abstract$g4@PMID,c("title","jabbrv","selected","curated")])
-
-length(category$abstract$g5@PMID)
-View(db.abstract[db.abstract$pmid %in% category$abstract$g5@PMID,c("title","jabbrv","selected","curated")])
-
-
-
-save(db.no_abstract,db.abstract,category,pmid_category,file ="updates/current/Rdata/dbTables.Rdata")
-#terminar na pasta corona
+#db.abstract[-which(db.abstract$pmid %in% pmid_category),c("title",'jabbrv')]

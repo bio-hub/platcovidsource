@@ -1,6 +1,4 @@
-#pmid_select = gdata::read.xls(xls = "updates/current/export/pmids_por_termos.xlsx",sheet = "1")
 pmid_select = gdata::read.xls(xls = "updates/17abril2020//export/pmids_por_termos.xlsx",sheet = "1")
-#length(pmid_select$diagnosis)
 
 a1 = merge(conclusion_df$g1,context$context$g1)
 a2 = merge(conclusion_df$g2,context$context$g2)

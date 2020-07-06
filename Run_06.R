@@ -1,6 +1,7 @@
-#df for articles
-#### INDEX ####
-# iniciar na pasta corona
+### ### ### ### ### ### ### ### ### ##
+#### Clean and Organize info site ####
+### ### ### ### ### ### ### ### ### ##
+
 number_of_article = length(abstracts@PMID) # Number of Articles
 number_abstract = nrow(pmid_abs) # Number of Abstracts
 
@@ -20,39 +21,10 @@ box.1 = as.data.frame(table(box.1))
 box.1$perc = sapply(box.1$Freq, function(x) (round(x/nrow(pmid_abs)*100,2)))
 box.1 =box.1[order(-box.1$Freq),][1:5,]
 
-#box.1.2 = sapply(db[which(db$pmid %in% pmid_no_abs$pmid),"type"], function(x) sub("\\Journal Article\\ \\|\\ Journal Article", "Journal Article",x))
-#box.1.2 = sapply(box.1.2, function(x) sub("\\Editorial\\ \\|\\ \\Editorial", "Editorial",x))
-#box.1.2 = sapply(box.1.2, function(x) sub("\\Editorial\\ \\|\\ \\Journal\\ \\Article", "Journal Article | Editorial",x))
-#box.1.2 = sapply(box.1.2, function(x) sub("\\Editorial\\ \\|\\ Review", "Review | Editorial",x))
-#box.1.2 = sapply(box.1.2, function(x) sub("\\Editorial\\ \\|\\ \\Letter", "Letter | Editorial",x))
-#box.1.2 = sapply(box.1.2, function(x) sub("\\Letter\\ \\|\\ \\Journal\\ \\Article", "Journal Article | Letter",x))
-#box.1.2 = sapply(box.1.2, function(x) sub("\\Letter\\ \\|\\ \\Letter", "Letter",x))
-#box.1.2 = sapply(box.1.2, function(x) sub("\\Review\\ \\|\\ \\Journal\\ \\Article", "Journal Article | Review",x))
-#box.1.2 = sapply(box.1.2, function(x) sub("\\News\\ \\|\\ \\Journal\\ \\Article", "Journal Article | News",x))
-#box.1.2 = sapply(box.1.2, function(x) sub("\\Comment\\ \\|\\ \\Journal\\ \\Article", "Journal Article | Comment",x))
-#box.1.2 = sapply(box.1.2, function(x) sub("\\Comment\\ \\|\\ \\Letter", "Letter | Comment",x))
-#box.1.2 = sapply(box.1.2, function(x) sub("\\Comment\\ \\|\\ \\Editorial", "Editorial | Comment",x))
-#box.1.2 = as.data.frame(table(box.1.2))
-#box.1.2$perc = sapply(box.1.2$Freq, function(x) (round(x/nrow(pmid_no_abs)*100,2)))
-#box.1.2 =box.1.2[order(-box.1.2$Freq),][1:5,]
-
-#Graph 1
-p # Plot with the number of articles by 
-
 #Source of scientific information
 top5Affiliation=CountryAffiliation_abs[1:5,]
 top5Affiliation$perc = sapply(top5Affiliation$Freq, function(x) (round(x/sum(CountryAffiliation_abs$Freq)*100,2)))
 
-#word tonekization
-nrow(wordAll) #Global words  from abstract
-wordAll.filtred # Filtred lobal words  from abstract
-wordAllTop50[1:50,] # Filtred Top 50 Global words  from abstract
-nrow(excluded.words) # Global words exlcuded from abstract
-
-#Categories
-flux
-d1;lg;g
-box.category
 
 #Sentences 
 context_sentence = paste0(as.character(length(context[["context"]][["g1"]][["context"]])) ,", ",
@@ -63,8 +35,6 @@ context_sentence = paste0(as.character(length(context[["context"]][["g1"]][["con
 
 
 source("scripts/creat_flux2.R")
-
-flux2
 
 a = wordAll.g.Top50$g1
 b = wordAll.g.Top50$g2
@@ -94,8 +64,6 @@ save(number_of_article,p,number_abstract,box.1,top5Affiliation,
      flux,d1,lg,g,box.category,
      context_sentence, flux2,
      file = "updates/current/Rdata/syntax.Rdata")
-
-
 
 
 #### Gene panel ####

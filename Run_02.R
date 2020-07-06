@@ -2,8 +2,6 @@
 ######### 1 Word Atomization ###########
 ### ### ### ### ### ### ### #### ### ### 
 
-#Iniciar na pasta corona
-
 ### ### ### ### ### #
 ###  Global View  ###
 ### ### ### ### ### #
@@ -16,7 +14,7 @@ setwd("updates/current/tmp")
 wordAll= word_atomizations(abstracts)
 file.remove("word_table.txt")
 
-#Common words:
+#Common words (in addition from pubmed.R)
   a = c("china","wuhan","abstract","covid","hubei","province","coronavirus","\\bsars-cov-2\\b",
         "2020","2019","january","december","february",
         "patient","cases","data","reported","number","including","early","\\bs\\b","\\bct\\b","\\bci\\b",
@@ -40,7 +38,6 @@ rm(a)
 ### ### ### ### ### ###
 wordList = eval(parse(text = paste0("list(",paste0("g",1:5,"= word_atomizations(category$abstract$g",1:5,")", collapse = ","),")")))
 file.remove("word_table.txt")
-#setwd("../")
 
 #Word.category Function --> 
   word.category = function(df_name = "The name of output",Word_List = "WordList object"){
@@ -172,24 +169,6 @@ rm(a.1,a.2,a.3,a.4,i,j,g1_context,g2_context,g3_context,g4_context,g5_context,g1
 rm(term1,term2,term3,term4,term5,term1.1,term2.1,term3.1,term4.1,term5.1)
 
 
-### ### ### ### ### ### ### ### ### ### 
-### Export the Word Document View  ###
-### ### ### ### ### ### ### ### ### ###
-a1 = merge(conclusion_df$g1,context$context$g1)
-a2 = merge(conclusion_df$g2,context$context$g2)
-a3 = merge(conclusion_df$g3,context$context$g4)
-a4 = merge(conclusion_df$g4,context$context$g5)
-a5 = merge(conclusion_df$g5,context$context$g5)
-a = rbind(data.frame(a1,category = "Diagnosis"),data.frame(a2,category = "Treatment"),data.frame(a3,category = "Epidemiology"),data.frame(a4,category = "Transmission"),data.frame(a5,category = "Symptoms"))
-b = data.frame(group = paste0("g",1:5),term = c("Diagnosis","Treatment","Epidemiology","Transmission","Symptoms"),stringsAsFactors = F)
-c = merge(a,db[,c(1,3)], by = 'pmid', all.x = F, all.y = F)
-save(db,b,a,context, file = "../Rdata/Conclusion.RData")
-
-#for (i in 1:nrow(b)){
-#  render(input = "../../../scripts/category.Rmd",output_format = "word_document",output_file = paste0(b[i,2],".docx"),output_dir = "./export/")
-#}
-
-
 WriteXLS(c("a1","a2","a3","a4","a5"), ExcelFileName = "../export/Conclusion_context_Comparisons.xlsx", 
          SheetNames = c("diagnsosis","treatment","epidemiology","trasmission","sings"),row.names = F, FreezeRow =  1)
 
@@ -242,38 +221,11 @@ pmid_abs = df[grep(pattern = "No Abstract Found",x = df$abs,value = F,invert = T
 CountryAffiliation_abs =  as.data.frame(table(pmid.country[which(pmid.country$pmid %in% pmid_abs$pmid),2]))
 CountryAffiliation_abs = CountryAffiliation_abs[order(-CountryAffiliation_abs$Freq),]
 
-### ### ### ### ### #
-###  Weekly View  ###
-### ### ### ### ### #
-#country.date.pmid = na.omit(merge(pmid.country,db[,c("pmid","date")], by ="pmid",all = T))
-#country.date.pmid.1 = 
-#  list(Anterior = country.date.pmid %>% filter(between(date, as.Date("1999-01-01"), as.Date("2019-11-30"))),
-#       Jan = country.date.pmid %>% filter(between(date, as.Date("2020-01-01"), as.Date("2020-01-31"))),
-#       Fev = country.date.pmid %>% filter(between(date, as.Date("2020-02-01"), as.Date("2020-02-29"))),
-#       Mar = country.date.pmid %>% filter(between(date, as.Date("2020-03-01"), as.Date("2020-03-31"))) ,
-#       Abr = country.date.pmid %>% filter(between(date, as.Date("2020-04-01"), as.Date("2020-04-30"))),
-#       Mai = country.date.pmid %>% filter(between(date, as.Date("2020-05-01"), as.Date("2020-05-30"))),
-#       Jun = country.date.pmid %>% filter(between(date, as.Date("2020-06-01"), as.Date("2020-06-30"))),
-#       
-#       week = list( s1 = country.date.pmid %>% filter(between(date, as.Date("2020-04-01"), as.Date("2020-04-01")+7)),
-#                    s2 = country.date.pmid %>% filter(between(date, as.Date("2020-04-01"), as.Date("2020-04-01")+14)),
-#                    s3 = country.date.pmid %>% filter(between(date, as.Date("2020-04-01"), as.Date("2020-04-01")+21)),
-#                    s4 = country.date.pmid %>% filter(between(date, as.Date("2020-04-01"), as.Date("2020-04-01")+28)),
-#                    s5 = country.date.pmid %>% filter(between(date, as.Date("2020-04-01"), as.Date("2020-04-01")+35)),
-#                    s6 = country.date.pmid %>% filter(between(date, as.Date("2020-04-01"), as.Date("2020-04-01")+42)),
-#                    s7 = country.date.pmid %>% filter(between(date, as.Date("2020-04-01"), as.Date("2020-04-01")+49)),
-#                    s8 = country.date.pmid %>% filter(between(date, as.Date("2020-04-01"), as.Date("2020-04-01")+56)),
-#                    s9 = country.date.pmid %>% filter(between(date, as.Date("2020-04-01"), as.Date("2020-04-01")+63)),
-#                    s10 = country.date.pmid %>% filter(between(date, as.Date("2020-04-01"), as.Date("2020-04-01")+70)),
-#                    s11 = country.date.pmid %>% filter(between(date, as.Date("2020-04-01"), as.Date("2020-04-01")+77))
-#       )
-# )
 
 country.date.pmid = na.omit(merge(pmid.country,db[,c("pmid","date")], by ="pmid",all = T))
 load("../../01jun2020/Rdata/country_date_old.Rdata")
 country.date.pmid = rbind(country.date.pmid_old,country.date.pmid)
 
-#start.date = min(na.omit(country.date.pmid$date))
 start.date = as.Date("2020-01-01")
 start.month = as.numeric(format(start.date, "%m"))
 last.date = max(na.omit(country.date.pmid$date))
