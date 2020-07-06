@@ -1,0 +1,25 @@
+corona_library = c("stringr",
+                   "WriteXLS",
+                   "rentrez",
+                   "easyPubMed",
+                   "pubmed.mineR",
+                   "VennDiagram",
+                   "countrycode",
+                   "RWordPress",
+                   "knitr",
+                   "XMLRPC",
+                   "reshape2",
+                   "RCurl",
+                   "dplyr",
+                   "tokenizers",
+                   "rmarkdown",
+                   "ggplot2",
+                   "plotly",
+                   "DiagrammeR",
+                   "DT",
+                   "DiagrammeRsvg",
+                   "VennDiagram",
+                   "gridExtra")
+
+library(easypackages)
+libraries(corona_library)
